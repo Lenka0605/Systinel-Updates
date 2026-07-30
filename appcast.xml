@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Systinel</title>
+        <item>
+            <title>1.1.1</title>
+            <pubDate>Thu, 30 Jul 2026 19:22:25 +0700</pubDate>
+            <link>https://github.com/Lenka0605/Systinel-Updates</link>
+            <sparkle:version>37</sparkle:version>
+            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <sparkle:releaseNotesLink>https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/release-notes/Systinel-1.1.1-37-update.md</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/Lenka0605/Systinel-Updates/releases/download/v1.1.1-37/Systinel-1.1.1-37-update.zip" length="3509588" type="application/octet-stream" sparkle:edSignature="n6NYFYtIoeGtTpKBygJ9hFxDOeLmOMIkidj9GKV8JFStaFcpXtcWEllcskve8WkIN8lradKgJ/cgufTDlX49BA=="/>
+        </item>
+    </channel>
+</rss>
