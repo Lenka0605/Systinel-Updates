@@ -11,7 +11,7 @@
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
             <sparkle:releaseNotesLink>https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/release-notes/Systinel-1.1.1-37-update.md</sparkle:releaseNotesLink>
-            <enclosure url="https://github.com/Lenka0605/Systinel-Updates/releases/download/v1.1.1-37/Systinel-1.1.1-37-update.zip" length="3509588" type="application/octet-stream" sparkle:edSignature="n6NYFYtIoeGtTpKBygJ9hFxDOeLmOMIkidj9GKV8JFStaFcpXtcWEllcskve8WkIN8lradKgJ/cgufTDlX49BA=="/>
+            <enclosure url="https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/updates/Systinel-1.1.1-37-update.zip" length="3509588" type="application/octet-stream" sparkle:edSignature="nHDtd22ZNXAIDhBWD9Sf43Lr742yO48B6r7rRZ0fm0K2JNdZ4QUXx8TVTuM7vvHa13SfshSNiJ/3hedwZeiiDA=="/>
         </item>
     </channel>
 </rss>
