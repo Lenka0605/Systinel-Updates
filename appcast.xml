@@ -4,6 +4,17 @@
         <title>Systinel</title>
         <item>
             <title>1.1.1</title>
+            <pubDate>Tue, 18 Aug 2026 03:33:08 +0800</pubDate>
+            <link>https://github.com/Lenka0605/Systinel-Updates</link>
+            <sparkle:version>58</sparkle:version>
+            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <sparkle:releaseNotesLink>https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/release-notes/Systinel-1.1.1-58-update.md</sparkle:releaseNotesLink>
+            <enclosure url="https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/updates/Systinel-1.1.1-58-update.zip" length="3601333" type="application/octet-stream" sparkle:edSignature="XL0gB/1XTnfgAkh9oFyh8O2sh77YWQ9tL3qLtk6KIVB1TUBJnN8Kxw5na/P96aeWOcLSQN7+pfLcuk8eMkq9Ag=="/>
+        </item>
+        <item>
+            <title>1.1.1</title>
             <pubDate>Tue, 11 Aug 2026 18:37:34 +0800</pubDate>
             <link>https://github.com/Lenka0605/Systinel-Updates</link>
             <sparkle:version>57</sparkle:version>
@@ -23,17 +34,6 @@
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
             <sparkle:releaseNotesLink>https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/release-notes/Systinel-1.1.1-56-update.md</sparkle:releaseNotesLink>
             <enclosure url="https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/updates/Systinel-1.1.1-56-update.zip" length="3594937" type="application/octet-stream" sparkle:edSignature="su5y5Icdv0efRQaFT7EfFOxqrsxo73N6RpidFrpibsd5jW+JbHEsl/gRPcNKTS4/ta5mVQzbE9nkcd43pPXgDg=="/>
-        </item>
-        <item>
-            <title>1.1.1</title>
-            <pubDate>Mon, 10 Aug 2026 03:21:47 +0700</pubDate>
-            <link>https://github.com/Lenka0605/Systinel-Updates</link>
-            <sparkle:version>55</sparkle:version>
-            <sparkle:shortVersionString>1.1.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <sparkle:releaseNotesLink>https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/release-notes/Systinel-1.1.1-55-update.md</sparkle:releaseNotesLink>
-            <enclosure url="https://raw.githubusercontent.com/Lenka0605/Systinel-Updates/main/updates/Systinel-1.1.1-55-update.zip" length="3577937" type="application/octet-stream" sparkle:edSignature="c5xItQwmzjswWMvzQ5ZTaj9KAzSvktcY6kexT6hBBua0PjZZDZ9QeZh2JbwGmBFNsRdAMi9PhLuv5UTyDX49CQ=="/>
         </item>
     </channel>
 </rss>
