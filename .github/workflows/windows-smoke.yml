@@ -11,7 +11,8 @@ on:
         type: boolean
         default: false
 permissions:
-  contents: read
+  # GitHub requires push-level access to read a draft release.
+  contents: write
 jobs:
   verify:
     runs-on: windows-2025
@@ -20,6 +21,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           sparse-checkout: windows/qa
+          persist-credentials: false
       - name: Download the binary release only
         shell: pwsh
         env:
