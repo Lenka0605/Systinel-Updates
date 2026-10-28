@@ -1,6 +1,15 @@
 param([string]$Output, [string]$App, [string]$ExpectedVersion)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes, System.Windows.Forms, System.Drawing
+Add-Type @'
+using System;
+using System.Text;
+using System.Runtime.InteropServices;
+public static class SystinelQaNative {
+    [DllImport("user32.dll", CharSet=CharSet.Unicode)] public static extern int GetClassName(IntPtr window, StringBuilder text, int size);
+    [DllImport("user32.dll", SetLastError=true)] public static extern bool PostMessage(IntPtr window, uint message, IntPtr w, IntPtr l);
+}
+'@
 function Wait-Element([System.Windows.Automation.AutomationElement]$Root, [System.Windows.Automation.AutomationProperty]$Property, [string]$Value, [int]$Seconds = 40) {
     $condition = [System.Windows.Automation.PropertyCondition]::new($Property, $Value)
     $deadline = [DateTime]::UtcNow.AddSeconds($Seconds)
@@ -11,9 +20,22 @@ function Wait-Element([System.Windows.Automation.AutomationElement]$Root, [Syste
     } while ([DateTime]::UtcNow -lt $deadline)
     throw "UI element missing: $Value"
 }
+function Is-NativeButton($Element) {
+    $handle = [IntPtr]$Element.Current.NativeWindowHandle
+    if ($handle -eq [IntPtr]::Zero) { return $false }
+    $class = [System.Text.StringBuilder]::new(256)
+    [void][SystinelQaNative]::GetClassName($handle, $class, $class.Capacity)
+    return $class.ToString() -eq 'Button'
+}
 function Invoke-Button($Element) {
-    $pattern = $Element.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern)
-    $pattern.Invoke()
+    $pattern = $null
+    if ($Element.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$pattern)) {
+        $pattern.Invoke()
+    } elseif (Is-NativeButton $Element) {
+        # NSIS's language plugin exposes its Win32 buttons as UIA panes, without Invoke.
+        # BM_CLICK acts on that exact button; no global keystrokes or process termination.
+        if (![SystinelQaNative]::PostMessage([IntPtr]$Element.Current.NativeWindowHandle, 0xF5, [IntPtr]::Zero, [IntPtr]::Zero)) { throw 'NSIS button click failed' }
+    } else { throw "Unsupported button: $($Element.Current.Name), class=$($Element.Current.ClassName)" }
 }
 function Capture-Desktop([string]$Path) {
     $b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
@@ -49,10 +71,10 @@ try {
             if ($title -eq 'Installer Language') {
                 Invoke-Button (Wait-Element $w ([System.Windows.Automation.AutomationElement]::NameProperty) 'OK' 3)
             } elseif ($title -like 'Systinel*Windows Preview*' -or $title -like 'Systinel*Setup*') {
-                $buttons = $w.FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty, [System.Windows.Automation.ControlType]::Button))
+                $buttons = $w.FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.Condition]::TrueCondition)
                 foreach ($b in $buttons) {
                     $name = $b.Current.Name.Replace('&','')
-                    if ($b.Current.IsEnabled -and $name -in @('Next >','Install','Finish','Close')) {
+                    if ($b.Current.IsEnabled -and $name -in @('Next >','Install','Finish','Close') -and (Is-NativeButton $b)) {
                         if ($name -in @('Finish','Close')) { Capture-Desktop "$Output/update-installed.png"; $finished = $true }
                         Invoke-Button $b
                         break
@@ -74,7 +96,7 @@ try {
     Capture-Desktop "$Output/update-error.png"
     try {
         $all = [System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Descendants, [System.Windows.Automation.Condition]::TrueCondition)
-        $all | ForEach-Object { "$($_.Current.ControlType.ProgrammaticName) | $($_.Current.AutomationId) | $($_.Current.Name)" } | Set-Content "$Output/update-ui-tree.txt"
+        $all | ForEach-Object { "$($_.Current.ControlType.ProgrammaticName) | $($_.Current.ClassName) | $($_.Current.NativeWindowHandle) | $($_.Current.AutomationId) | $($_.Current.Name)" } | Set-Content "$Output/update-ui-tree.txt"
     } catch { }
     throw
 }
