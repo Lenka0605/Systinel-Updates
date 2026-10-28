@@ -5,7 +5,7 @@ on:
       tag:
         description: Windows release tag to verify
         required: true
-        default: windows-v1.8.0-74
+        default: windows-v1.9.0-75
       public_feed:
         description: Also test the public signed feed and verified installer download
         type: boolean
@@ -31,6 +31,9 @@ jobs:
           New-Item -ItemType Directory -Force qa-output | Out-Null
           gh release download $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --pattern '*windows-x64-Setup.exe' --dir qa-output
           if ($LASTEXITCODE -ne 0) { throw 'Release download failed' }
+          New-Item -ItemType Directory -Force qa-baseline | Out-Null
+          gh release download windows-v1.8.0-74 --repo $env:GITHUB_REPOSITORY --pattern '*windows-x64-Setup.exe' --dir qa-baseline
+          if ($LASTEXITCODE -ne 0) { throw 'Baseline download failed' }
       - name: Install, run, update and uninstall
         shell: pwsh
         env:
