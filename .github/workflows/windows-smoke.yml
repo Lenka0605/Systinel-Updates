@@ -1,0 +1,47 @@
+name: Windows installer verification
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Windows release tag to verify
+        required: true
+        default: windows-v1.8.0-74
+      public_feed:
+        description: Also test the public signed feed and verified installer download
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          sparse-checkout: windows/qa
+      - name: Download the binary release only
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          New-Item -ItemType Directory -Force qa-output | Out-Null
+          gh release download $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --pattern '*windows-x64-Setup.exe' --dir qa-output
+          if ($LASTEXITCODE -ne 0) { throw 'Release download failed' }
+      - name: Install, run, update and uninstall
+        shell: pwsh
+        env:
+          PUBLIC_FEED: ${{ inputs.public_feed }}
+        run: ./windows/qa/verify.ps1 -PublicFeed ($env:PUBLIC_FEED -eq 'true')
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-verification
+          path: |
+            qa-output/*.json
+            qa-output/*.png
+            qa-output/*.txt
+            qa-output/ui/**
+          retention-days: 14
