@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "version": "1.8.0",
+  "build": 74,
+  "architecture": "win-x64",
+  "channel": "preview",
+  "url": "https://github.com/Lenka0605/Systinel-Updates/releases/download/windows-v1.8.0-74/Systinel-1.8.0-74-windows-x64-Setup.exe",
+  "fileName": "Systinel-1.8.0-74-windows-x64-Setup.exe",
+  "length": 35124090,
+  "sha256": "71456a373b2512763fa118f1e7e0d8f5494d8c8e70cb0e08e3fb993230f0141a",
+  "releaseUrl": "https://github.com/Lenka0605/Systinel-Updates/releases/tag/windows-v1.8.0-74"
+}
